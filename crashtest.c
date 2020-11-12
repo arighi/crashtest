@@ -229,17 +229,11 @@ static int procfs_open(struct inode *inode, struct file *file)
 	return single_open(file, procfs_read, NULL);
 }
 
-static int procfs_release(struct inode *inode, struct file *file)
-{
-	return 0;
-}
-
-static const struct file_operations procfs_fops = {
-	.open		= procfs_open,
-	.read		= seq_read,
-	.write		= procfs_write,
-	.llseek		= seq_lseek,
-	.release	= procfs_release,
+static const struct proc_ops procfs_fops = {
+	.proc_open	= procfs_open,
+	.proc_read	= seq_read,
+	.proc_write	= procfs_write,
+	.proc_release	= seq_release,
 };
 
 static int __init test_init(void)
